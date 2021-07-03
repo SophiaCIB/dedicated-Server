@@ -173,7 +173,7 @@ func decreaseLatestRecoil() -> void:
 		handedWeapon.decrese_recoil_steps = Vector2(0.0, 0.0)
 		# print("set back to 0")
 
-remotesync func shoot() -> void:	
+puppetsync func shoot() -> void:	
 		if handedWeapon.next_shot && !handedWeapon.reloading:
 			if checkForReload():
 				return
@@ -186,9 +186,9 @@ remotesync func shoot() -> void:
 			#rpc_unreliable_id(1, "checkForHit")
 			#rpc_unreliable("recoil")
 
-remotesync func reload():
+puppetsync func reload():
 	if !handedWeapon.reloading:
 		handedWeapon.reload()
 		
-remotesync func decrease_latest_recoil():
+puppetsync func decrease_latest_recoil():
 	handedWeapon.decrease_latest_recoil = true

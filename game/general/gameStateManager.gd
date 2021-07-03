@@ -14,9 +14,9 @@ func attach_weapon(weapon, pos, dir) -> void:
 	weapon.dropWeapon(dir)
 	add_child(weapon)
 
-remotesync func add_player(team : int, player_id : int) -> void:
+sync func add_player(team : int, player_id : int) -> void:
 	print("add_player ", team, " ", player_id)
-	var player = load("res://player/Player.tscn").instance()
+	var player = load("res://player/player_model.tscn").instance()
 	#player.set_name(str(player_id))
 	#player.set_network_master(player_id)
 	player.connect("drop_weapon", self, "attach_weapon")
@@ -27,9 +27,6 @@ remotesync func add_player(team : int, player_id : int) -> void:
 	#set spawning location
 	player.translation = GlobalMapInformation.get_player_spawn(player)
 	#player.spawn()
-	if not player_id == get_tree().get_network_unique_id():
-		#GlobalPlayersInformation.other_players.push_back(get_node(player.name))
-		pass
 	GameState.changed()
 
 func set_win_condition(path : String) -> void:
@@ -60,13 +57,16 @@ func _process(delta) -> void:
 	pass
 
 func init_game():
-	rpc('add_player', team.A, get_tree().get_network_unique_id())
+	#rpc('add_player', team.A, get_tree().get_network_unique_id())
 	#add_player(team.A, get_tree().get_network_unique_id())
 	for player in ServerState.player_id:
 		print("player ", player)
 		rpc('add_player', team.B, player)
 	GameState.changed()
 	print(GameState.team_a, GameState.team_b)
+	for player_name in ServerState.player_id.keys():
+		print('reset tick')
+		GameState.rpc_id(player_name, 'reset_tick', GameState.tick, ServerState.ping[player_name]['average_ping'])
 		#add_player(team.B, player)
 	#restart_round()
 

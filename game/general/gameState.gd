@@ -25,9 +25,12 @@ func _ready():
 	set_network_master(1)
 
 func _physics_process(delta):
+	#multiplayer.poll()
+	#Engine.iterations_per_second
+	#tick += 1
 	time += delta
-	if 1/Engine.iterations_per_second >= time:
-		time -= 1/Engine.iterations_per_second
+	if 1/128 <= time:
+		time = time - 0.0078125
 		tick += 1
 
 func getSide(player_team : int) -> int:
@@ -35,6 +38,9 @@ func getSide(player_team : int) -> int:
 		team.A: return side_team_a
 		team.B: return side_team_b
 	return -1
+
+func reset_tick():
+	tick = 0
 
 func get_team(player_team : int) -> Array:
 	match player_team:

@@ -3,7 +3,7 @@
 [ext_resource path="res://game/console/console.gd" type="Script" id=1]
 [ext_resource path="res://player/HUD/fonts/standard.tres" type="DynamicFont" id=2]
 
-[sub_resource type="Theme" id=3]
+[sub_resource type="Theme" id=1]
 default_font = ExtResource( 2 )
 
 [node name="console" type="Control"]
@@ -17,7 +17,7 @@ margin_top = -362.0
 margin_right = 643.0
 margin_bottom = 362.0
 mouse_filter = 2
-theme = SubResource( 3 )
+theme = SubResource( 1 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -61,5 +61,4 @@ size_flags_vertical = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="text_entered" from="panel/grid/input" to="." method="_on_input_text_entered"]
